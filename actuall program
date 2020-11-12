@@ -1,0 +1,43 @@
+#include <FastLED.h>
+
+// How many leds in your strip?
+#define NUM_LEDS 14
+#define DATA_PIN 6
+
+#define PELLET_SPACING 1
+
+CRGB leds[NUM_LEDS];
+
+void setup() { 
+  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+  randomSeed(analogRead(0));
+
+}
+
+void setupBoard() {
+  FastLED.clear();
+  for (int i = 0; i < NUM_LEDS; i += PELLET_SPACING) {
+    leds[i] = CRGB(10, 7, 5);
+  }
+}
+
+void startPacman() {
+  for (int i = 0; i < NUM_LEDS; ++i) {
+    leds[i] = CRGB(255, 215, 5);
+    
+
+    if (i > 0) {
+      leds[i - 1] = CRGB::Black;
+    }
+FastLED.show();
+    delay(500);
+  }
+}
+
+void loop() { 
+  setupBoard();
+
+  startPacman();
+
+  FastLED.show();
+}
